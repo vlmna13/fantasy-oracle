@@ -1,0 +1,30 @@
+<svg viewBox="0 0 360 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#8090b0" stroke-width="0.9" fill="none" opacity="0.45">
+    <!-- TL -->
+    <path d="M 4 28 L 4 4 L 28 4"/>
+    <line x1="4" y1="4" x2="22" y2="22" stroke-width="0.5"/>
+    <line x1="14" y1="4" x2="4" y2="14" stroke-width="0.5" opacity="0.5"/>
+    <!-- TR -->
+    <path d="M 332 4 L 356 4 L 356 28"/>
+    <line x1="356" y1="4" x2="338" y2="22" stroke-width="0.5"/>
+    <!-- BL -->
+    <path d="M 4 452 L 4 476 L 28 476"/>
+    <line x1="4" y1="476" x2="22" y2="458" stroke-width="0.5"/>
+    <!-- BR -->
+    <path d="M 332 476 L 356 476 L 356 452"/>
+    <line x1="356" y1="476" x2="338" y2="458" stroke-width="0.5"/>
+    <!-- witcher medallion top center -->
+    <circle cx="180" cy="4" r="5" stroke-width="0.8"/>
+    <line x1="175" y1="4" x2="165" y2="4"/>
+    <line x1="185" y1="4" x2="195" y2="4"/>
+    <!-- ticks -->
+    <line x1="4" y1="100" x2="12" y2="100" stroke-width="0.7"/>
+    <line x1="4" y1="380" x2="12" y2="380" stroke-width="0.7"/>
+    <line x1="348" y1="100" x2="356" y2="100" stroke-width="0.7"/>
+    <line x1="348" y1="380" x2="356" y2="380" stroke-width="0.7"/>
+    <!-- horizontal rule -->
+    <line x1="20" y1="220" x2="340" y2="220" stroke-width="0.5" opacity="0.3"/>
+  </g>
+  <rect x="1.5" y="1.5" width="357" height="477" stroke="#404560" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <rect x="5" y="5" width="350" height="470" stroke="#8090b0" stroke-width="0.4" fill="none" opacity="0.15"/>
+</svg>
