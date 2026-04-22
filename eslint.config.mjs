@@ -9,6 +9,9 @@ export default withNuxt(
     },
     rules: {
       ...unicorn.configs.recommended.rules,
+      'vue/html-self-closing': ['warn', {
+        html: { void: 'never', normal: 'never', component: 'always' },
+      }],
     },
   }
 )
