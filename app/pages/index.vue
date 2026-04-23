@@ -8,6 +8,7 @@ import { universes } from '~/data/universes';
     <div class="flex gap-8 p-8 cards-wrapper">
       <UniverseCard v-for="u in universes" :key="u.id" :universe="u" />
     </div>
+    <p class="footer-rune">✦ Omnia fata revelat ✦</p>
   </section>
 </template>
 
@@ -25,7 +26,25 @@ import { universes } from '~/data/universes';
 }
 
 .cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
   width: 100%;
   max-width: 1140px;
+}
+
+.footer-rune {
+  opacity: 0.8;
+  font-family: Cinzel, serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+@media (width <= 760px) {
+  .cards-wrapper {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
 }
 </style>
