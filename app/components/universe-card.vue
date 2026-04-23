@@ -11,15 +11,16 @@ defineProps<{
     <img :src="universe.frame" class="card-frame" aria-hidden="true" />
 
     <div class="card-art">
-      <slot name="icon"></slot>
+      <img v-if="universe.image" :src="universe.image" :alt="universe.name" class="card-art-img" />
+      <slot v-else name="icon"></slot>
     </div>
 
     <div class="card-body">
-      <div class="card-name">{{ universe.name }}</div>
+      <p class="card-name">{{ universe.name }}</p>
       <p class="card-desc">{{ universe.description }}</p>
       <NuxtLink :to="universe.route" class="card-btn">
         <span class="card-btn-gem"></span>
-        Visit World
+        Visit The World
         <span class="card-btn-gem"></span>
       </NuxtLink>
     </div>
@@ -54,13 +55,20 @@ defineProps<{
 
 .card-art {
   width: 100%;
-  aspect-ratio: 3 / 2;
+
+  /* height: 200px; */
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+}
+
+.card-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .card-body {
@@ -99,8 +107,8 @@ defineProps<{
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #c9a84c;
-  border: 1px solid rgb(201 168 76 / 55%);
+  color: var(--gold);
+  border: 1px solid rgb(var(--gold-rgb) / 55%);
   background: transparent;
   cursor: pointer;
   position: relative;
@@ -116,7 +124,12 @@ defineProps<{
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgb(201 168 76 / 6%) 50%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(var(--gold-rgb) / 6%) 50%,
+    transparent 100%
+  );
   transform: translateX(-100%);
   transition: transform 0.5s ease;
 }
@@ -126,20 +139,20 @@ defineProps<{
 }
 
 .card-btn:hover {
-  color: #f0d878;
-  border-color: rgb(201 168 76 / 90%);
-  background: rgb(201 168 76 / 7%);
+  color: var(--gold-bright);
+  border-color: rgb(var(--gold-rgb) / 90%);
+  background: rgb(var(--gold-rgb) / 7%);
   box-shadow:
-    0 0 12px rgb(201 168 76 / 35%),
-    0 0 30px rgb(201 168 76 / 15%),
-    inset 0 0 12px rgb(201 168 76 / 5%);
+    0 0 12px rgb(var(--gold-rgb) / 35%),
+    0 0 30px rgb(var(--gold-rgb) / 15%),
+    inset 0 0 12px rgb(var(--gold-rgb) / 5%);
 }
 
 .card-btn-gem {
   display: inline-block;
   width: 5px;
   height: 5px;
-  background: #c9a84c;
+  background: var(--gold);
   transform: rotate(45deg);
   flex-shrink: 0;
   transition: box-shadow 0.35s;
@@ -147,7 +160,7 @@ defineProps<{
 
 .card-btn:hover .card-btn-gem {
   box-shadow:
-    0 0 6px rgb(201 168 76 / 90%),
-    0 0 12px rgb(201 168 76 / 50%);
+    0 0 6px rgb(var(--gold-rgb) / 90%),
+    0 0 12px rgb(var(--gold-rgb) / 50%);
 }
 </style>
