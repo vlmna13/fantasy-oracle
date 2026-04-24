@@ -17,7 +17,9 @@ onMounted(() => {
 
 <template>
   <section class="page">
-    <HeroSection ref="hero" />
+    <div ref="hero">
+      <HeroSection />
+    </div>
     <div ref="cards" class="cards-wrapper">
       <UniverseCard v-for="u in universes" :key="u.id" :universe="u" />
     </div>
