@@ -10,6 +10,7 @@ export default withNuxt(
     },
     rules: {
       ...unicorn.configs.recommended.rules,
+      'unicorn/consistent-function-scoping': 'off',
       ...prettierConfig.rules,
     },
   }
