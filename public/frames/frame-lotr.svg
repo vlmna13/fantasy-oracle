@@ -1,0 +1,29 @@
+<svg viewBox="0 0 360 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#5a9060" stroke-width="0.9" fill="none" opacity="0.5">
+    <!-- TL -->
+    <path d="M 4 25 Q 4 4 25 4"/>
+    <path d="M 4 12 Q 10 6 16 4" stroke-width="0.5" opacity="0.6"/>
+    <circle cx="8" cy="8" r="1.5" fill="#5a9060" opacity="0.6"/>
+    <circle cx="4" cy="16" r="1" fill="#5a9060" opacity="0.4"/>
+    <!-- TR -->
+    <path d="M 356 25 Q 356 4 335 4"/>
+    <path d="M 356 12 Q 350 6 344 4" stroke-width="0.5" opacity="0.6"/>
+    <circle cx="352" cy="8" r="1.5" fill="#5a9060" opacity="0.6"/>
+    <!-- BL -->
+    <path d="M 4 455 Q 4 476 25 476"/>
+    <path d="M 4 468 Q 10 474 16 476" stroke-width="0.5" opacity="0.6"/>
+    <circle cx="8" cy="472" r="1.5" fill="#5a9060" opacity="0.6"/>
+    <!-- BR -->
+    <path d="M 356 455 Q 356 476 335 476"/>
+    <circle cx="352" cy="472" r="1.5" fill="#5a9060" opacity="0.6"/>
+    <!-- top elvish motif -->
+    <path d="M 160 4 Q 180 12 200 4" stroke-width="0.8"/>
+    <path d="M 170 4 Q 180 9 190 4" stroke-width="0.5" opacity="0.6"/>
+    <circle cx="180" cy="4" r="2.5" fill="#5a9060" opacity="0.4"/>
+    <!-- side motifs -->
+    <path d="M 4 240 Q 10 232 16 240 Q 10 248 4 240" stroke-width="0.7"/>
+    <path d="M 356 240 Q 350 232 344 240 Q 350 248 356 240" stroke-width="0.7"/>
+  </g>
+  <rect x="1.5" y="1.5" width="357" height="477" stroke="#2a5c3f" stroke-width="1.2" fill="none" opacity="0.45" rx="3"/>
+  <rect x="5" y="5" width="350" height="470" stroke="#5a9060" stroke-width="0.4" fill="none" opacity="0.2" rx="2"/>
+</svg>
