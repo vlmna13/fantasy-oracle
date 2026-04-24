@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import { universes } from '~/data/universes';
+
+const heroReference = useTemplateRef<HTMLElement>('hero');
+const cardsReference = useTemplateRef<HTMLElement>('cards');
+
+const { animateHero, animateCards } = usePageAnimations();
+
+onMounted(() => {
+  if (heroReference.value) animateHero(heroReference.value);
+  if (cardsReference.value) {
+    const cards = [...cardsReference.value.children] as HTMLElement[];
+    animateCards(cards);
+  }
+});
 </script>
 
 <template>
   <section class="page">
-    <HeroSection />
-    <div class="flex gap-8 p-8 cards-wrapper">
+    <HeroSection ref="hero" />
+    <div ref="cards" class="cards-wrapper">
       <UniverseCard v-for="u in universes" :key="u.id" :universe="u" />
     </div>
     <p class="footer-rune">✦ Omnia fata revelat ✦</p>
