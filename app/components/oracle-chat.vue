@@ -6,18 +6,50 @@
       <div class="date-sep-line"></div>
     </div>
 
-    <div class="messages"></div>
+    <div class="messages">
+      <div v-for="(msg, index) in messages" :key="index" :class="['message', msg.role]">
+        {{ msg.text }}
+      </div>
+    </div>
 
     <div class="input-bar">
       <div class="input-wrap">
-        <input class="input-field" type="text" placeholder="Ask the Oracle..." autocomplete="off" />
+        <input
+          v-model="question"
+          class="input-field"
+          type="text"
+          placeholder="Ask the Oracle..."
+          autocomplete="off"
+          @keydown.enter="sendMessage"
+        />
       </div>
-      <button class="send-btn">✦</button>
+      <button class="send-btn" :disabled="isLoading" @click="sendMessage">✦</button>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const question = ref('');
+const messages = ref<{ role: 'user' | 'oracle'; text: string }[]>([]);
+const isLoading = ref(false);
+const route = useRoute();
+const universeId = route.params.id as string;
+
+async function sendMessage() {
+  if (!question.value.trim || isLoading.value) return;
+  messages.value.push({ role: 'user', text: question.value });
+  const userQuestion = question.value;
+  question.value = '';
+  isLoading.value = true;
+  const data = await $fetch<{ answer: string }>('/api/chat', {
+    method: 'POST',
+    body: { question: userQuestion, universeId },
+  });
+
+  messages.value.push({ role: 'oracle', text: data.answer });
+  isLoading.value = false;
+}
+</script>
 
 <style scoped>
 .chat-wrapper {
@@ -26,8 +58,6 @@
   flex-direction: column;
   overflow: hidden;
 }
-
-/* ── Date separator ── */
 
 .date-sep {
   display: flex;
@@ -52,8 +82,6 @@
   background: linear-gradient(to right, transparent, rgb(var(--accent) / 50%), transparent);
 }
 
-/* ── Messages ── */
-
 .messages {
   flex: 1;
   overflow-y: auto;
@@ -63,8 +91,6 @@
   gap: 1.75rem;
   scroll-behavior: smooth;
 }
-
-/* ── Input bar ── */
 
 .input-bar {
   flex-shrink: 0;
