@@ -1,5 +1,5 @@
 <template>
-  <header :class="`oracle-header oracle-header-${universe.id}`">
+  <header :class="`oracle-header-${universe.id}`">
     <NuxtLink to="/" class="back">
       <svg
         viewBox="0 0 24 24"
