@@ -1,6 +1,7 @@
 <template>
-  <div class="page">
+  <div :class="`page universe-${universe?.id}`">
     <OracleHeader v-if="universe" :universe="universe" />
+    <OracleChat />
   </div>
 </template>
 

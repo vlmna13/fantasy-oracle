@@ -34,24 +34,10 @@ header {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 0 1.5rem;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid rgb(var(--accent) / 35%);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
   position: relative;
-}
-
-.oracle-header-harry-potter {
-  border-bottom-color: rgb(139 26 26 / 35%);
-  background: linear-gradient(180deg, rgb(20 8 8 / 95%) 0%, rgb(10 5 5 / 85%) 100%);
-}
-
-.oracle-header-lord-of-the-rings {
-  border-bottom-color: rgb(42 92 63 / 35%);
-  background: linear-gradient(180deg, rgb(5 14 8 / 95%) 0%, rgb(3 10 5 / 85%) 100%);
-}
-
-.oracle-header-witcher {
-  border-bottom-color: rgb(64 69 96 / 35%);
-  background: linear-gradient(180deg, rgb(8 8 18 / 95%) 0%, rgb(5 5 12 / 85%) 100%);
 }
 
 .back {
