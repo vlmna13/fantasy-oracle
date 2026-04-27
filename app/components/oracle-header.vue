@@ -40,6 +40,16 @@ header {
   position: relative;
 }
 
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgb(var(--gold-rgb) / 20%), transparent);
+}
+
 .back {
   display: flex;
   align-items: center;
