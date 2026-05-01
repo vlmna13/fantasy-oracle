@@ -57,7 +57,7 @@ header::after {
   font-family: Cinzel, serif;
   font-size: 0.7rem;
   letter-spacing: 0.15em;
-  color: rgb(201 168 76 / 65%);
+  color: rgb(var(--accent-glow) / 65%);
   cursor: pointer;
   text-decoration: none;
   transition: color 0.25s;
@@ -65,7 +65,7 @@ header::after {
 }
 
 .back:hover {
-  color: var(--gold);
+  color: var(--accent-text);
 }
 
 .back svg {
@@ -81,16 +81,16 @@ header::after {
   font-family: Cinzel, serif;
   font-size: clamp(0.85rem, 1.5vw, 1.05rem);
   font-weight: 600;
-  color: var(--gold);
+  color: var(--accent-text);
   letter-spacing: 0.12em;
-  text-shadow: 0 0 20px rgb(201 168 76 / 40%);
+  text-shadow: 0 0 20px rgb(var(--accent-glow) / 40%);
 }
 
 .header-sub {
   font-family: 'EB Garamond', serif;
   font-size: 0.72rem;
   font-style: italic;
-  color: var(--text-dim);
+  color: rgb(var(--text-rgb) / 55%);
   letter-spacing: 0.08em;
   margin-top: 0.1rem;
 }

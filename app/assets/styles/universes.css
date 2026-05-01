@@ -8,6 +8,8 @@
   --bg-end: #0c0506;
   --header-bg: linear-gradient(180deg, rgb(20 8 8 / 95%) 0%, rgb(10 5 5 / 85%) 100%);
   --input-bg: linear-gradient(0deg, rgb(15 5 5 / 97%) 0%, rgb(10 5 5 / 90%) 100%);
+  --msg-oracle-color: #d4c9a8;
+  --msg-user-color: rgb(220 215 235 / 88%);
 }
 
 .universe-lord-of-the-rings,
@@ -20,6 +22,8 @@
   --bg-end: #050a07;
   --header-bg: linear-gradient(180deg, rgb(5 14 8 / 95%) 0%, rgb(3 10 5 / 85%) 100%);
   --input-bg: linear-gradient(0deg, rgb(3 8 4 / 97%) 0%, rgb(3 7 4 / 90%) 100%);
+  --msg-oracle-color: #c8d4c0;
+  --msg-user-color: rgb(210 225 210 / 85%);
 }
 
 .universe-witcher,
@@ -32,6 +36,8 @@
   --bg-end: #080910;
   --header-bg: linear-gradient(180deg, rgb(8 8 18 / 95%) 0%, rgb(5 5 12 / 85%) 100%);
   --input-bg: linear-gradient(0deg, rgb(5 5 14 / 97%) 0%, rgb(4 4 10 / 90%) 100%);
+  --msg-oracle-color: #b8c0d0;
+  --msg-user-color: rgb(210 215 230 / 82%);
 }
 
 .card-harry-potter,

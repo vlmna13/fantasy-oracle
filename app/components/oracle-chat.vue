@@ -7,13 +7,37 @@
     </div>
 
     <div ref="messagesReference" class="messages">
-      <div v-for="(msg, index) in messages" :key="index" :class="['message', msg.role]">
-        {{ msg.text }}
-      </div>
-      <div v-if="isLoading" class="message oracle loading">
-        <span></span>
-        <span></span>
-        <span></span>
+      <template v-for="(msg, index) in messages" :key="index">
+        <div v-if="msg.role === 'oracle'" class="msg-oracle">
+          <div class="oracle-avatar">
+            <img :src="avatarSource" width="22" height="22" alt="Oracle" />
+          </div>
+          <div class="oracle-content">
+            <div class="oracle-label">The Oracle Speaks</div>
+            <div class="oracle-bubble">
+              <div class="oracle-text">{{ msg.text }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="msg-user">
+          <div class="user-bubble">
+            <div class="user-text">{{ msg.text }}</div>
+          </div>
+        </div>
+      </template>
+
+      <div v-if="isLoading" class="msg-oracle typing">
+        <div class="oracle-avatar">
+          <img :src="avatarSource" width="22" height="22" alt="Oracle" />
+        </div>
+        <div class="oracle-content">
+          <div class="oracle-label">The Oracle Speaks</div>
+          <div class="typing-text">
+            Consulting the ancient tomes
+            <span class="dots"> <span></span><span></span><span></span> </span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -34,11 +58,16 @@
 </template>
 
 <script setup lang="ts">
+import { universes } from '~/data/universes';
+
 const question = ref('');
 const messages = ref<{ role: 'user' | 'oracle'; text: string }[]>([]);
 const isLoading = ref(false);
+
 const route = useRoute();
 const universeId = route.params.id as string;
+const universe = universes.find((u) => u.id === universeId);
+const avatarSource = universe?.avatar ?? '/avatars/avatar-hp.svg';
 
 const messagesReference = ref<HTMLElement | undefined>(undefined);
 
@@ -54,7 +83,7 @@ watch(
 );
 
 async function sendMessage() {
-  if (!question.value.trim || isLoading.value) return;
+  if (!question.value.trim() || isLoading.value) return;
   messages.value.push({ role: 'user', text: question.value });
   const userQuestion = question.value;
   question.value = '';
@@ -63,7 +92,6 @@ async function sendMessage() {
     method: 'POST',
     body: { question: userQuestion, universeId },
   });
-
   messages.value.push({ role: 'oracle', text: data.answer });
   isLoading.value = false;
 }
@@ -102,36 +130,13 @@ async function sendMessage() {
 
 .messages {
   flex: 1;
+  height: 0;
   overflow-y: auto;
   padding: 1.5rem 1.5rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
   scroll-behavior: smooth;
-  height: 0;
-}
-
-.message {
-  max-width: 75%;
-  padding: 0.85em 1.2em;
-  line-height: 1.7;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 1rem;
-}
-
-.message.user {
-  align-self: flex-end;
-  background: rgb(var(--accent) / 15%);
-  border: 1px solid rgb(var(--accent) / 40%);
-  color: var(--text);
-}
-
-.message.oracle {
-  align-self: flex-start;
-  background: rgb(var(--accent) / 8%);
-  border: 1px solid rgb(var(--accent-glow) / 25%);
-  color: var(--accent-text);
-  box-shadow: 0 0 20px rgb(var(--accent) / 10%);
 }
 
 .messages::-webkit-scrollbar {
@@ -151,39 +156,194 @@ async function sendMessage() {
   background: rgb(var(--accent) / 70%);
 }
 
-.loading {
+.msg-oracle {
   display: flex;
-  gap: 0.4em;
-  align-items: center;
-  padding: 0.85em 1.2em;
+  align-items: flex-start;
+  gap: 0.9rem;
+  max-width: 82%;
+  animation: msg-in 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
-.loading span {
-  width: 6px;
-  height: 6px;
+.oracle-avatar {
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: var(--accent-text);
-  animation: pulse 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+  background: radial-gradient(circle at 40% 40%, var(--bg-mid), var(--bg-start));
+  border: 1px solid rgb(var(--accent-glow) / 50%);
+  color: var(--accent-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 14px rgb(var(--accent) / 50%),
+    0 0 4px rgb(var(--accent-glow) / 20%);
+  position: relative;
+  overflow: hidden;
+  margin-top: 1.5rem;
 }
 
-.loading span:nth-child(2) {
+.oracle-avatar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgb(var(--accent-glow) / 8%) 0%, transparent 70%);
+}
+
+.oracle-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.oracle-label {
+  font-family: Cinzel, serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  opacity: 0.65;
+  padding-left: 0.1rem;
+}
+
+.oracle-bubble {
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 60%, var(--bg-start) 100%);
+  border: 1px solid rgb(var(--accent) / 55%);
+  border-left: 2px solid rgb(var(--accent-glow) / 50%);
+  padding: 1.1rem 1.3rem;
+  position: relative;
+  box-shadow:
+    0 4px 24px rgb(0 0 0 / 60%),
+    inset 0 0 30px rgb(var(--accent) / 8%),
+    0 0 0 1px rgb(var(--accent-glow) / 6%);
+}
+
+.oracle-bubble::before {
+  content: '❝';
+  position: absolute;
+  top: 0.4rem;
+  left: 0.6rem;
+  font-size: 1.4rem;
+  color: rgb(var(--accent-glow) / 12%);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.oracle-bubble::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 18px;
+  height: 18px;
+  border-top: 1px solid rgb(var(--accent-glow) / 35%);
+  border-right: 1px solid rgb(var(--accent-glow) / 35%);
+}
+
+.oracle-text {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--msg-oracle-color);
+  position: relative;
+  z-index: 1;
+}
+
+.msg-user {
+  display: flex;
+  justify-content: flex-end;
+  animation: msg-in 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.user-bubble {
+  max-width: 65%;
+  background: rgb(0 0 0 / 40%);
+  border: 1px solid rgb(var(--text-rgb) / 18%);
+  border-right: 2px solid rgb(var(--text-rgb) / 28%);
+  padding: 0.75rem 1.1rem;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 50%);
+  position: relative;
+}
+
+.user-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 14px;
+  height: 14px;
+  border-bottom: 1px solid rgb(var(--text-rgb) / 22%);
+  border-right: 1px solid rgb(var(--text-rgb) / 22%);
+}
+
+.user-text {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  color: var(--msg-user-color);
+  line-height: 1.6;
+}
+
+.typing {
+  opacity: 0.7;
+}
+
+.typing-text {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgb(var(--accent-glow) / 55%);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 0.25rem;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.4;
+  animation: dot-pulse 1.4s infinite;
+}
+
+.dots span:nth-child(2) {
   animation-delay: 0.2s;
 }
 
-.loading span:nth-child(3) {
+.dots span:nth-child(3) {
   animation-delay: 0.4s;
 }
 
-@keyframes pulse {
+@keyframes dot-pulse {
   0%,
+  80%,
   100% {
     opacity: 0.2;
-    transform: scale(0.8);
+    transform: scale(0.85);
   }
 
-  50% {
+  40% {
+    opacity: 0.9;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
   }
 }
 
@@ -227,22 +387,22 @@ async function sendMessage() {
 .input-wrap::before {
   top: 0;
   left: 0;
-  border-top: 1px solid rgb(var(--gold-rgb) / 40%);
-  border-left: 1px solid rgb(var(--gold-rgb) / 40%);
+  border-top: 1px solid rgb(var(--accent-glow) / 40%);
+  border-left: 1px solid rgb(var(--accent-glow) / 40%);
 }
 
 .input-wrap::after {
   bottom: 0;
   right: 0;
-  border-bottom: 1px solid rgb(var(--gold-rgb) / 40%);
-  border-right: 1px solid rgb(var(--gold-rgb) / 40%);
+  border-bottom: 1px solid rgb(var(--accent-glow) / 40%);
+  border-right: 1px solid rgb(var(--accent-glow) / 40%);
 }
 
 .input-field {
   width: 100%;
   background: rgb(var(--accent) / 8%);
   border: 1px solid rgb(var(--accent) / 45%);
-  color: var(--text);
+  color: var(--msg-user-color);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 1rem;
   font-style: italic;
@@ -261,9 +421,9 @@ async function sendMessage() {
 }
 
 .input-field:focus {
-  border-color: rgb(var(--gold-rgb) / 55%);
+  border-color: rgb(var(--accent-glow) / 55%);
   box-shadow:
-    0 0 0 1px rgb(var(--gold-rgb) / 10%),
+    0 0 0 1px rgb(var(--accent-glow) / 10%),
     0 0 18px rgb(var(--accent) / 30%);
 }
 
@@ -271,8 +431,8 @@ async function sendMessage() {
   width: 46px;
   height: 46px;
   background: rgb(var(--accent) / 20%);
-  border: 1px solid rgb(var(--gold-rgb) / 50%);
-  color: var(--gold);
+  border: 1px solid rgb(var(--accent-glow) / 50%);
+  color: var(--accent-text);
   font-size: 1.1rem;
   cursor: pointer;
   display: flex;
@@ -291,16 +451,16 @@ async function sendMessage() {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgb(var(--gold-rgb) / 15%) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgb(var(--accent-glow) / 15%) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.3s;
 }
 
 .send-btn:hover {
-  border-color: rgb(var(--gold-rgb) / 85%);
+  border-color: rgb(var(--accent-glow) / 85%);
   box-shadow:
-    0 0 16px rgb(var(--gold-rgb) / 30%),
-    0 0 4px rgb(var(--gold-rgb) / 15%);
+    0 0 16px rgb(var(--accent-glow) / 30%),
+    0 0 4px rgb(var(--accent-glow) / 15%);
 }
 
 .send-btn:hover::before {
