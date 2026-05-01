@@ -308,7 +308,7 @@ async function sendMessage() {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--accent-text);
   opacity: 0.4;
   animation: dot-pulse 1.4s infinite;
 }
@@ -411,7 +411,7 @@ async function sendMessage() {
   transition:
     border-color 0.3s,
     box-shadow 0.3s;
-  caret-color: var(--gold);
+  caret-color: var(--accent-text);
 }
 
 .input-field::placeholder {
