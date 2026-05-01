@@ -15,7 +15,8 @@ if (!universe) navigateTo('/');
 .page {
   position: relative;
   z-index: 2;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   width: 100%;

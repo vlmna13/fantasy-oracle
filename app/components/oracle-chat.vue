@@ -6,9 +6,14 @@
       <div class="date-sep-line"></div>
     </div>
 
-    <div class="messages">
+    <div ref="messagesReference" class="messages">
       <div v-for="(msg, index) in messages" :key="index" :class="['message', msg.role]">
         {{ msg.text }}
+      </div>
+      <div v-if="isLoading" class="message oracle loading">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </div>
 
@@ -34,6 +39,19 @@ const messages = ref<{ role: 'user' | 'oracle'; text: string }[]>([]);
 const isLoading = ref(false);
 const route = useRoute();
 const universeId = route.params.id as string;
+
+const messagesReference = ref<HTMLElement | undefined>(undefined);
+
+watch(
+  messages,
+  async () => {
+    await nextTick();
+    if (messagesReference.value) {
+      messagesReference.value.scrollTop = messagesReference.value.scrollHeight;
+    }
+  },
+  { deep: true },
+);
 
 async function sendMessage() {
   if (!question.value.trim || isLoading.value) return;
@@ -90,6 +108,83 @@ async function sendMessage() {
   flex-direction: column;
   gap: 1.75rem;
   scroll-behavior: smooth;
+  height: 0;
+}
+
+.message {
+  max-width: 75%;
+  padding: 0.85em 1.2em;
+  line-height: 1.7;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1rem;
+}
+
+.message.user {
+  align-self: flex-end;
+  background: rgb(var(--accent) / 15%);
+  border: 1px solid rgb(var(--accent) / 40%);
+  color: var(--text);
+}
+
+.message.oracle {
+  align-self: flex-start;
+  background: rgb(var(--accent) / 8%);
+  border: 1px solid rgb(var(--accent-glow) / 25%);
+  color: var(--accent-text);
+  box-shadow: 0 0 20px rgb(var(--accent) / 10%);
+}
+
+.messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: rgb(var(--accent) / 40%);
+  border-radius: 2px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--accent) / 70%);
+}
+
+.loading {
+  display: flex;
+  gap: 0.4em;
+  align-items: center;
+  padding: 0.85em 1.2em;
+}
+
+.loading span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-text);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.loading span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .input-bar {
