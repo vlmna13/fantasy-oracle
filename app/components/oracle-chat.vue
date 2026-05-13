@@ -58,10 +58,13 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { universes } from '~/data/universes';
+import { useChatStore } from '~/store/chat';
 
+const chatStore = useChatStore();
+const { messages } = storeToRefs(chatStore);
 const question = ref('');
-const messages = ref<{ role: 'user' | 'oracle'; text: string }[]>([]);
 const isLoading = ref(false);
 
 const route = useRoute();
@@ -82,9 +85,13 @@ watch(
   { deep: true },
 );
 
+onMounted(() => {
+  chatStore.loadMessages(universeId);
+});
+
 async function sendMessage() {
   if (!question.value.trim() || isLoading.value) return;
-  messages.value.push({ role: 'user', text: question.value });
+  chatStore.addMessage('user', question.value);
   const userQuestion = question.value;
   question.value = '';
   isLoading.value = true;
@@ -92,7 +99,7 @@ async function sendMessage() {
     method: 'POST',
     body: { question: userQuestion, universeId },
   });
-  messages.value.push({ role: 'oracle', text: data.answer });
+  chatStore.addMessage('oracle', data.answer);
   isLoading.value = false;
 }
 </script>
