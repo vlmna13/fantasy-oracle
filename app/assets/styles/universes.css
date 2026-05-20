@@ -1,76 +1,74 @@
+.universe-harry-potter,
 .card-harry-potter {
-  background: linear-gradient(160deg, #13070a 0%, #200d0d 50%, #0c0506 100%);
-  box-shadow: 0 0 0 1px rgb(139 26 26 / 35%), 0 8px 40px rgb(0 0 0 / 75%);
+  --accent: 139 26 26;
+  --accent-text: #c9a84c;
+  --accent-glow: 201 168 76;
+  --bg-start: #13070a;
+  --bg-mid: #200d0d;
+  --bg-end: #0c0506;
+  --header-bg: linear-gradient(180deg, rgb(20 8 8 / 95%) 0%, rgb(10 5 5 / 85%) 100%);
+  --input-bg: linear-gradient(0deg, rgb(15 5 5 / 97%) 0%, rgb(10 5 5 / 90%) 100%);
+  --msg-oracle-color: #d4c9a8;
+  --msg-user-color: rgb(220 215 235 / 88%);
 }
 
-.card-harry-potter:hover {
-  box-shadow:
-    0 0 0 1px rgb(201 168 76 / 45%),
-    0 20px 60px rgb(0 0 0 / 90%),
-    0 0 45px rgb(201 168 76 / 25%),
-    inset 0 0 40px rgb(139 26 26 / 15%);
-}
-
-.card-harry-potter .card-art {
-  background:
-    radial-gradient(ellipse 60% 70% at 50% 50%, rgb(139 26 26 / 18%) 0%, transparent 70%),
-    linear-gradient(180deg, #180909 0%, #250f0f 100%);
-}
-
-.card-harry-potter .card-name {
-  color: #c9a84c;
-}
-
-.card-harry-potter .card-desc {
-  color: #c4a898;
-}
-
-.card-harry-potter .card-icon {
-  color: #8b1a1a;
-}
-
+.universe-lord-of-the-rings,
 .card-lord-of-the-rings {
-  background: linear-gradient(160deg, #060e09 0%, #0d1a10 50%, #050a07 100%);
-  box-shadow: 0 0 0 1px rgb(42 92 63 / 35%), 0 8px 40px rgb(0 0 0 / 75%);
+  --accent: 42 92 63;
+  --accent-text: #8aab8a;
+  --accent-glow: 90 155 100;
+  --bg-start: #060e09;
+  --bg-mid: #0d1a10;
+  --bg-end: #050a07;
+  --header-bg: linear-gradient(180deg, rgb(5 14 8 / 95%) 0%, rgb(3 10 5 / 85%) 100%);
+  --input-bg: linear-gradient(0deg, rgb(3 8 4 / 97%) 0%, rgb(3 7 4 / 90%) 100%);
+  --msg-oracle-color: #c8d4c0;
+  --msg-user-color: rgb(210 225 210 / 85%);
 }
 
-.card-lord-of-the-rings:hover {
-  box-shadow:
-    0 0 0 1px rgb(90 155 100 / 40%),
-    0 20px 60px rgb(0 0 0 / 90%),
-    0 0 45px rgb(60 130 80 / 22%),
-    inset 0 0 40px rgb(42 92 63 / 15%);
-}
-
-.card-lord-of-the-rings .card-art {
-  background:
-    radial-gradient(ellipse 60% 70% at 50% 50%, rgb(42 92 63 / 22%) 0%, transparent 70%),
-    linear-gradient(180deg, #060e09 0%, #0e1e12 100%);
-}
-
-.card-lord-of-the-rings .card-name {
-  color: #8aab8a;
-}
-
-.card-lord-of-the-rings .card-desc {
-  color: #90a888;
-}
-
-.card-lord-of-the-rings .card-icon {
-  color: #2a5c3f;
-}
-
+.universe-witcher,
 .card-witcher {
-  background: linear-gradient(160deg, #0b0c10 0%, #131520 50%, #080910 100%);
-  box-shadow: 0 0 0 1px rgb(80 90 110 / 30%), 0 8px 40px rgb(0 0 0 / 80%);
+  --accent: 64 69 96;
+  --accent-text: #c0c8d8;
+  --accent-glow: 192 200 220;
+  --bg-start: #0b0c10;
+  --bg-mid: #131520;
+  --bg-end: #080910;
+  --header-bg: linear-gradient(180deg, rgb(8 8 18 / 95%) 0%, rgb(5 5 12 / 85%) 100%);
+  --input-bg: linear-gradient(0deg, rgb(5 5 14 / 97%) 0%, rgb(4 4 10 / 90%) 100%);
+  --msg-oracle-color: #b8c0d0;
+  --msg-user-color: rgb(210 215 230 / 82%);
 }
 
+.card-harry-potter,
+.card-lord-of-the-rings,
+.card-witcher {
+  background: linear-gradient(160deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
+  box-shadow: 0 0 0 1px rgb(var(--accent) / 35%), 0 8px 40px rgb(0 0 0 / 75%);
+}
+
+.card-harry-potter:hover,
+.card-lord-of-the-rings:hover,
 .card-witcher:hover {
   box-shadow:
-    0 0 0 1px rgb(192 200 220 / 35%),
-    0 20px 60px rgb(0 0 0 / 95%),
-    0 0 45px rgb(160 180 210 / 18%),
-    inset 0 0 40px rgb(60 70 100 / 15%);
+    0 0 0 1px rgb(var(--accent-glow) / 45%),
+    0 20px 60px rgb(0 0 0 / 90%),
+    0 0 45px rgb(var(--accent-glow) / 25%),
+    inset 0 0 40px rgb(var(--accent) / 15%);
+}
+
+.card-harry-potter .card-art,
+.card-lord-of-the-rings .card-art,
+.card-witcher .card-art {
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 50%, rgb(var(--accent) / 20%) 0%, transparent 70%),
+    linear-gradient(180deg, var(--bg-start) 0%, var(--bg-mid) 100%);
+}
+
+.card-harry-potter .card-name,
+.card-lord-of-the-rings .card-name,
+.card-witcher .card-name {
+  color: var(--accent-text);
 }
 
 .card-witcher .card-art {
@@ -79,21 +77,9 @@
       0deg,
       transparent,
       transparent 28px,
-      rgb(60 70 100 / 6%) 28px,
-      rgb(60 70 100 / 6%) 29px
+      rgb(var(--accent) / 6%) 28px,
+      rgb(var(--accent) / 6%) 29px
     ),
-    radial-gradient(ellipse 60% 70% at 50% 50%, rgb(60 70 100 / 25%) 0%, transparent 70%),
-    linear-gradient(180deg, #0a0b10 0%, #141622 100%);
-}
-
-.card-witcher .card-name {
-  color: #c0c8d8;
-}
-
-.card-witcher .card-desc {
-  color: #909ab0;
-}
-
-.card-witcher .card-icon {
-  color: #505870;
+    radial-gradient(ellipse 60% 70% at 50% 50%, rgb(var(--accent) / 25%) 0%, transparent 70%),
+    linear-gradient(180deg, var(--bg-start) 0%, var(--bg-mid) 100%);
 }

@@ -5,6 +5,8 @@ export interface Universe {
   route: string;
   frame: string;
   image?: string;
+  crest: string;
+  avatar: string;
 }
 
 export const universes: Universe[] = [
@@ -16,6 +18,8 @@ export const universes: Universe[] = [
     route: '/oracle/harry-potter',
     frame: '/frames/frame-hp.svg',
     image: '/harry-potter.png',
+    crest: '/crests/crest-hp.svg',
+    avatar: '/avatars/avatar-hp.svg',
   },
   {
     id: 'lord-of-the-rings',
@@ -25,6 +29,8 @@ export const universes: Universe[] = [
     route: '/oracle/lord-of-the-rings',
     frame: '/frames/frame-lotr.svg',
     image: '/ring.png',
+    crest: '/crests/crest-lotr.svg',
+    avatar: '/avatars/avatar-lotr.svg',
   },
   {
     id: 'witcher',
@@ -34,5 +40,7 @@ export const universes: Universe[] = [
     route: '/oracle/witcher',
     frame: '/frames/frame-witcher.svg',
     image: '/wolf.png',
+    crest: '/crests/crest-witcher.svg',
+    avatar: '/avatars/avatar-witcher.svg',
   },
 ];
