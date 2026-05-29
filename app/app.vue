@@ -6,6 +6,14 @@
   </div>
 </template>
 
+<script lang="ts" setup>
+import { useAuthStore } from './store/auth';
+const authStore = useAuthStore();
+onMounted(async () => {
+  await authStore.initAnonymous();
+});
+</script>
+
 <style>
 *,
 *::before,
