@@ -1,5 +1,14 @@
 import { defineStore } from 'pinia';
-import { getAuth, signInAnonymously } from 'firebase/auth';
+import {
+  getAuth,
+  signInAnonymously,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  linkWithCredential,
+  EmailAuthProvider,
+  updateProfile,
+  signOut,
+} from 'firebase/auth';
 
 export const useAuthStore = defineStore('auth', () => {
   const auth = getAuth();
@@ -14,5 +23,24 @@ export const useAuthStore = defineStore('auth', () => {
       await signInAnonymously(auth);
     }
   }
-  return { user, isAnonymous, isLoggedIn, displayName, initAnonymous };
+
+  async function register(nickname: string, password: string) {
+    const email = `${nickname}@fantasy-oracle.app`;
+    if (user.value?.isAnonymous) {
+      const credential = EmailAuthProvider.credential(email, password);
+      await linkWithCredential(user.value, credential);
+    } else {
+      await createUserWithEmailAndPassword(auth, email, password);
+    }
+    await updateProfile(user.value!, { displayName: nickname });
+  }
+
+  async function login(nickname: string, password: string) {
+    const email = `${nickname}@fantasy-oracle.app`;
+    await signInWithEmailAndPassword(auth, email, password);
+  }
+  async function logout() {
+    await signOut(auth);
+  }
+  return { user, isAnonymous, isLoggedIn, displayName, initAnonymous, register, login, logout };
 });

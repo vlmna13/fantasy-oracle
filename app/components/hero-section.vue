@@ -15,8 +15,8 @@
           <button class="auth-btn auth-btn-ghost">Leave</button>
         </template>
         <template v-else>
-          <button class="auth-btn">Register</button>
-          <button class="auth-btn auth-btn-ghost">Sign In</button>
+          <NuxtLink to="/auth?mode=register" class="auth-btn">Register</NuxtLink>
+          <NuxtLink to="/auth?mode=login" class="auth-btn auth-btn-ghost">Sign In</NuxtLink>
         </template>
       </div>
     </div>
