@@ -16,9 +16,9 @@ An AI-powered oracle for fantasy universe fans. Choose your world and ask the Or
 
 ## Features
 
-- AI chat with universe-specific personas — powered by DeepSeek API
-- Unique visual theme per universe — color schemes, typography, atmosphere
-- Anonymous session on first visit — no sign-up required
+- AI chat with universe-specific personas - powered by DeepSeek API
+- Unique visual theme per universe - color schemes, typography, atmosphere
+- Anonymous session on first visit - no sign-up required
 - Firebase authentication — register with a nickname and password to sync history across devices
 - Chat history persisted in Firestore
 - GSAP animations — card entrances, message transitions, star field background

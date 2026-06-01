@@ -1,0 +1,32 @@
+<svg viewBox="0 0 360 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.55">
+    <!-- TL -->
+    <path d="M 4 20 L 4 4 L 20 4"/>
+    <path d="M 4 4 L 16 16"/>
+    <circle cx="4" cy="4" r="2" fill="#c9a84c" opacity="0.7"/>
+    <!-- TR -->
+    <path d="M 356 20 L 356 4 L 340 4"/>
+    <path d="M 356 4 L 344 16"/>
+    <circle cx="356" cy="4" r="2" fill="#c9a84c" opacity="0.7"/>
+    <!-- BL -->
+    <path d="M 4 460 L 4 476 L 20 476"/>
+    <path d="M 4 476 L 16 464"/>
+    <circle cx="4" cy="476" r="2" fill="#c9a84c" opacity="0.7"/>
+    <!-- BR -->
+    <path d="M 356 460 L 356 476 L 340 476"/>
+    <path d="M 356 476 L 344 464"/>
+    <circle cx="356" cy="476" r="2" fill="#c9a84c" opacity="0.7"/>
+    <!-- top center -->
+    <path d="M 155 4 L 180 14 L 205 4" stroke-width="0.8"/>
+    <circle cx="180" cy="4" r="3" fill="#c9a84c" opacity="0.5"/>
+    <!-- bottom center -->
+    <path d="M 155 476 L 180 466 L 205 476" stroke-width="0.8"/>
+    <!-- side dashes -->
+    <line x1="4" y1="120" x2="14" y2="120" stroke-width="0.8"/>
+    <line x1="346" y1="120" x2="356" y2="120" stroke-width="0.8"/>
+    <line x1="4" y1="360" x2="14" y2="360" stroke-width="0.8"/>
+    <line x1="346" y1="360" x2="356" y2="360" stroke-width="0.8"/>
+  </g>
+  <rect x="1.5" y="1.5" width="357" height="477" stroke="#8b1a1a" stroke-width="1.2" fill="none" opacity="0.4" rx="2"/>
+  <rect x="4" y="4" width="352" height="472" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.25" rx="1"/>
+</svg>
