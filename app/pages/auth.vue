@@ -20,7 +20,7 @@
           autocomplete="off"
         />
         <p v-if="error" class="error">{{ error }}</p>
-        <button class="btn" type="submit">{{ isLogin ? 'Sign In' : 'Register' }}</button>
+        <button class="oracle-btn" type="submit">{{ isLogin ? 'Sign In' : 'Register' }}</button>
       </form>
     </div>
   </div>
@@ -140,54 +140,5 @@ async function handleSubmit() {
   font-style: italic;
   color: rgb(220 80 80 / 90%);
   text-align: center;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.7em 2em;
-  margin-top: 0.5rem;
-  font-family: Cinzel, serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold);
-  border: 1px solid rgb(var(--gold-rgb) / 55%);
-  background: transparent;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition:
-    background 0.35s,
-    box-shadow 0.35s,
-    border-color 0.35s;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgb(var(--gold-rgb) / 6%) 50%,
-    transparent 100%
-  );
-  transform: translateX(-100%);
-  transition: transform 0.5s ease;
-}
-
-.btn:hover::before {
-  transform: translateX(100%);
-}
-
-.btn:hover {
-  border-color: rgb(var(--gold-rgb) / 90%);
-  background: rgb(var(--gold-rgb) / 7%);
-  box-shadow:
-    0 0 12px rgb(var(--gold-rgb) / 35%),
-    0 0 30px rgb(var(--gold-rgb) / 15%);
 }
 </style>
