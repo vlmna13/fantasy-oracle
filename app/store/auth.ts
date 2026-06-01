@@ -8,20 +8,23 @@ import {
   EmailAuthProvider,
   updateProfile,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 
 export const useAuthStore = defineStore('auth', () => {
   const auth = getAuth();
   const user = useCurrentUser();
 
-  const isAnonymous = computed<boolean>(() => user.value?.isAnonymous ?? true);
   const isLoggedIn = computed<boolean>(() => !!user.value && !user.value.isAnonymous);
   const displayName = computed(() => user.value?.displayName ?? 'Nomad');
+  const isLoading = computed(() => user.value === undefined);
 
   async function initAnonymous() {
-    if (!user.value) {
-      await signInAnonymously(auth);
-    }
+    onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        signInAnonymously(auth);
+      }
+    });
   }
 
   async function register(nickname: string, password: string) {
@@ -42,5 +45,5 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     await signOut(auth);
   }
-  return { user, isAnonymous, isLoggedIn, displayName, initAnonymous, register, login, logout };
+  return { user, isLoggedIn, isLoading, displayName, initAnonymous, register, login, logout };
 });
