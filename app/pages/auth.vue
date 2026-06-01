@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="container">
-      <img src="/sigil.svg" class="sigil" alt="sigil" />
+      <OracleSigil />
       <h1 class="title">{{ isLogin ? 'Welcome back, seeker' : 'Your legend begins here' }}</h1>
       <DividerLine />
       <form class="form" @submit.prevent="handleSubmit">
@@ -86,19 +86,6 @@ async function handleSubmit() {
   align-items: center;
   gap: 1.5rem;
   width: 100%;
-}
-
-.sigil {
-  width: 64px;
-  height: 64px;
-  opacity: 0.75;
-  animation: spin-slow 60s linear infinite;
-}
-
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .title {

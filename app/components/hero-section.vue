@@ -1,6 +1,6 @@
 <template>
   <div class="hero">
-    <img src="/sigil.svg" class="sigil" alt="sigil" />
+    <OracleSigil />
     <h1 class="hero-title">Fantasy Oracle</h1>
     <DividerLine />
     <p class="hero-sub">Choose your world. Ask the Oracle.</p>
@@ -36,14 +36,6 @@ const authStore = useAuthStore();
   gap: 1.1rem;
 }
 
-.sigil {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 0.25rem;
-  animation: spin-slow 60s linear infinite;
-  opacity: 0.75;
-}
-
 .hero-title {
   font-family: 'Cinzel Decorative', Cinzel, serif;
   font-size: clamp(2.4rem, 6.5vw, 5.2rem);
@@ -55,12 +47,6 @@ const authStore = useAuthStore();
     0 0 35px rgb(var(--gold-rgb) / 65%),
     0 0 80px rgb(var(--gold-rgb) / 22%),
     0 2px 6px rgb(0 0 0 / 90%);
-}
-
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .hero-sub {
