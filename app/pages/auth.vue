@@ -67,3 +67,140 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 8vh 5vw 4vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.sigil {
+  width: 64px;
+  height: 64px;
+  opacity: 0.75;
+  animation: spin-slow 60s linear infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.title {
+  font-family: Cinzel, serif;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-shadow:
+    0 0 35px rgb(var(--gold-rgb) / 50%),
+    0 2px 6px rgb(0 0 0 / 90%);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 380px;
+}
+
+.input {
+  width: 100%;
+  background: rgb(var(--gold-rgb) / 5%);
+  border: 1px solid rgb(var(--gold-rgb) / 35%);
+  color: #d4c9a8;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  padding: 0.75em 1.1em;
+  outline: none;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+  caret-color: var(--gold);
+}
+
+.input::placeholder {
+  color: rgb(255 255 255 / 25%);
+  font-style: italic;
+}
+
+.input:focus {
+  border-color: rgb(var(--gold-rgb) / 60%);
+  box-shadow: 0 0 18px rgb(var(--gold-rgb) / 20%);
+}
+
+.error {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgb(220 80 80 / 90%);
+  text-align: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7em 2em;
+  margin-top: 0.5rem;
+  font-family: Cinzel, serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgb(var(--gold-rgb) / 55%);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 0.35s,
+    box-shadow 0.35s,
+    border-color 0.35s;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(var(--gold-rgb) / 6%) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.btn:hover::before {
+  transform: translateX(100%);
+}
+
+.btn:hover {
+  border-color: rgb(var(--gold-rgb) / 90%);
+  background: rgb(var(--gold-rgb) / 7%);
+  box-shadow:
+    0 0 12px rgb(var(--gold-rgb) / 35%),
+    0 0 30px rgb(var(--gold-rgb) / 15%);
+}
+</style>
