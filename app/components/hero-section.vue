@@ -12,7 +12,7 @@
       <div class="auth-actions">
         <template v-if="authStore.isLoggedIn">
           <button class="oracle-btn">Cabinet</button>
-          <button class="oracle-btn oracle-btn-ghost">Leave</button>
+          <button class="oracle-btn oracle-btn-ghost" @click="authStore.logout()">Leave</button>
         </template>
         <template v-else>
           <NuxtLink to="/auth?mode=register" class="oracle-btn">Register</NuxtLink>
