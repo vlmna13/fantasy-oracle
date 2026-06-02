@@ -2,7 +2,7 @@
 
 **Live demo:** https://fantasy-oracle-nu.vercel.app
 
-An AI-powered oracle for fantasy universe fans. Choose your world and ask the Oracle anything — it answers in character, using the language and lore of that universe.
+An AI-powered oracle for fantasy universe fans. Choose your world and ask the Oracle anything - it answers in character, using the language and lore of that universe.
 
 ---
 
