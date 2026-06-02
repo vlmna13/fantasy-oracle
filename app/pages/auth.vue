@@ -29,6 +29,10 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/store/auth';
 import { FirebaseError } from 'firebase/app';
+
+definePageMeta({
+  middleware: 'auth',
+});
 const authStore = useAuthStore();
 const nickname = ref('');
 const password = ref('');
