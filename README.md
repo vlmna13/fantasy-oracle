@@ -8,9 +8,9 @@ An AI-powered oracle for fantasy universe fans. Choose your world and ask the Or
 
 ## Universes
 
-- **Harry Potter** — the Oracle speaks as a wise wizard within the halls of Hogwarts
-- **The Lord of the Rings** — answers from the depths of ancient Middle-earth
-- **The Witcher** — the Oracle of the Continent knows all paths, even the darkest ones
+- **Harry Potter** - the Oracle speaks as a wise wizard within the halls of Hogwarts
+- **The Lord of the Rings** - answers from the depths of ancient Middle-earth
+- **The Witcher** - the Oracle of the Continent knows all paths, even the darkest ones
 
 ---
 
@@ -19,9 +19,9 @@ An AI-powered oracle for fantasy universe fans. Choose your world and ask the Or
 - AI chat with universe-specific personas - powered by DeepSeek API
 - Unique visual theme per universe - color schemes, typography, atmosphere
 - Anonymous session on first visit - no sign-up required
-- Firebase authentication — register with a nickname and password to sync history across devices
+- Firebase authentication - register with a nickname and password to sync history across devices
 - Chat history persisted in Firestore
-- GSAP animations — card entrances, message transitions, star field background
+- GSAP animations - card entrances, message transitions, star field background
 - Fully responsive
 
 ---
