@@ -11,7 +11,7 @@
       </p>
       <div class="auth-actions">
         <template v-if="authStore.isLoggedIn">
-          <button class="oracle-btn">Cabinet</button>
+          <button class="oracle-btn">Sanctum</button>
           <button class="oracle-btn oracle-btn-ghost" @click="authStore.logout()">Leave</button>
         </template>
         <template v-else>
