@@ -4,6 +4,9 @@
       <BackButton />
       <h2 class="header-title">The Seeker's Sanctum</h2>
     </header>
+    <section class="hero">
+      <ProfileAvatar />
+    </section>
   </div>
 </template>
 
@@ -43,5 +46,12 @@
   color: var(--gold);
   text-align: center;
   opacity: 0.85;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2.5rem 0 2rem;
 }
 </style>
