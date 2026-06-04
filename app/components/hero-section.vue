@@ -11,7 +11,7 @@
       </p>
       <div class="auth-actions">
         <template v-if="authStore.isLoggedIn">
-          <button class="oracle-btn">Sanctum</button>
+          <NuxtLink to="/profile" class="oracle-btn">Sanctum</NuxtLink>
           <button class="oracle-btn oracle-btn-ghost" @click="authStore.logout()">Leave</button>
         </template>
         <template v-else>

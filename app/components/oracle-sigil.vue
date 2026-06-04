@@ -10,8 +10,10 @@ withDefaults(defineProps<{ src?: string }>(), {
 
 <style scoped>
 .sigil {
+  width: 80px;
+  height: 80px;
   opacity: 0.75;
-  animation: spin-slow linear infinite;
+  animation: spin-slow 60s linear infinite;
 }
 
 @keyframes spin-slow {
