@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="leave-wrap">
-      <button class="leave-btn">
+      <button class="leave-btn" @click="handleLeave">
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -37,6 +37,17 @@
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+import { useAuthStore } from '~/store/auth';
+
+const authStore = useAuthStore();
+
+async function handleLeave() {
+  await authStore.logout();
+  navigateTo('/');
+}
+</script>
 
 <style scoped>
 .section {
