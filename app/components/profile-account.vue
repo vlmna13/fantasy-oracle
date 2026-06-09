@@ -1,25 +1,6 @@
 <template>
   <section class="section">
-    <div class="section-head">
-      <span class="section-title">Account</span>
-      <span class="section-line"></span>
-    </div>
-    <div class="settings">
-      <div class="setting-row">
-        <div class="setting-left">
-          <span class="setting-label">Seeker's Name</span>
-          <span class="setting-val">Name</span>
-        </div>
-        <button class="oracle-btn setting-action">Change Name</button>
-      </div>
-      <div class="setting-row">
-        <div class="setting-left">
-          <span class="setting-label">Secret Incantation</span>
-          <span class="setting-val">• • • • • • • •</span>
-        </div>
-        <button class="oracle-btn setting-action">Change Password</button>
-      </div>
-    </div>
+    <div class="section-line"></div>
     <div class="leave-wrap">
       <button class="leave-btn" @click="handleLeave">
         <svg
@@ -54,73 +35,10 @@ async function handleLeave() {
   margin-top: 2.75rem;
 }
 
-.section-head {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.section-title {
-  font-family: Cinzel, serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold);
-  white-space: nowrap;
-}
-
 .section-line {
   flex: 1;
   height: 1px;
   background: linear-gradient(to right, rgb(var(--gold-rgb) / 30%), transparent);
-}
-
-.settings {
-  display: flex;
-  flex-direction: column;
-}
-
-.setting-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  background: rgb(18 16 22 / 72%);
-  border: 1px solid rgb(var(--gold-rgb) / 18%);
-  padding: 1.1rem 1.3rem;
-  border-bottom: none;
-}
-
-.setting-row:last-of-type {
-  border-bottom: 1px solid rgb(var(--gold-rgb) / 18%);
-}
-
-.setting-left {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
-}
-
-.setting-label {
-  font-family: Cinzel, serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  color: var(--text);
-}
-
-.setting-val {
-  font-family: 'EB Garamond', serif;
-  font-size: 0.9rem;
-  color: rgb(var(--text-rgb) / 55%);
-}
-
-.setting-action {
-  font-size: 0.62rem;
-  padding: 0.55em 1.2em;
-  white-space: nowrap;
 }
 
 .leave-wrap {
@@ -155,17 +73,5 @@ async function handleLeave() {
 .leave-btn svg {
   width: 15px;
   height: 15px;
-}
-
-@media (width <= 720px) {
-  .setting-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.8rem;
-  }
-
-  .setting-action {
-    width: 100%;
-  }
 }
 </style>

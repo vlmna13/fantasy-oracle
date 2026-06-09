@@ -45,5 +45,6 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     await signOut(auth);
   }
+
   return { user, isLoggedIn, isLoading, displayName, initAnonymous, register, login, logout };
 });
