@@ -29,13 +29,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function register(nickname: string, password: string) {
     const email = `${nickname}@fantasy-oracle.app`;
-    if (user.value?.isAnonymous) {
-      const credential = EmailAuthProvider.credential(email, password);
-      await linkWithCredential(user.value, credential);
-    } else {
-      await createUserWithEmailAndPassword(auth, email, password);
-    }
-    await updateProfile(user.value!, { displayName: nickname });
+    const credential = user.value?.isAnonymous
+      ? await linkWithCredential(user.value, EmailAuthProvider.credential(email, password))
+      : await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(credential.user, { displayName: nickname });
   }
 
   async function login(nickname: string, password: string) {
