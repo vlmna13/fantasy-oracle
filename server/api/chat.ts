@@ -1,6 +1,17 @@
 export default defineEventHandler(async (event) => {
   const { question, universeId } = await readBody(event);
   const apiKey = process.env.DEEPSEEK_API_KEY;
+
+  if (!apiKey) {
+    throw createError({ statusCode: 500, statusMessage: 'Oracle is not configured' });
+  }
+  if (typeof question !== 'string' || question.trim().length === 0) {
+    throw createError({ statusCode: 400, statusMessage: 'Question is required' });
+  }
+  if (question.length > 2000) {
+    throw createError({ statusCode: 400, statusMessage: 'Question is too long' });
+  }
+
   const systemPrompts: Record<string, string> = {
     'harry-potter':
       'You are an ancient oracle of the Harry Potter world. You respond as a wise wizard, using the terminology of that world. Never exit the cutscenes. Answer in the same language in which the question was asked.',
@@ -11,7 +22,7 @@ export default defineEventHandler(async (event) => {
   };
   const systemPrompt =
     systemPrompts[universeId] ??
-    'You are a wise oracle of a fantasy world. Answer in the spirit of that world.Never break character. Answer in the same language in which the question was asked.';
+    'You are a wise oracle of a fantasy world. Answer in the spirit of that world. Never break character. Answer in the same language in which the question was asked.';
   const response = await fetch('https://api.deepseek.com/chat/completions', {
     method: 'POST',
     headers: {
@@ -26,6 +37,15 @@ export default defineEventHandler(async (event) => {
       ],
     }),
   });
+  if (!response.ok) {
+    throw createError({ statusCode: 502, statusMessage: 'The Oracle is silent. Try again later' });
+  }
+
   const data = await response.json();
-  return { answer: data.choices[0].message.content };
+  const answer = data.choices?.[0]?.message?.content;
+  if (!answer) {
+    throw createError({ statusCode: 502, statusMessage: 'The Oracle gave no answer' });
+  }
+
+  return { answer };
 });
