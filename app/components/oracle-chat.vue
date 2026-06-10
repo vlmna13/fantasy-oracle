@@ -41,6 +41,8 @@
       </div>
     </div>
 
+    <p v-if="errorMessage" class="chat-error" role="alert">{{ errorMessage }}</p>
+
     <div class="input-bar">
       <div class="input-wrap">
         <input
@@ -66,6 +68,7 @@ const chatStore = useChatStore();
 const { messages } = storeToRefs(chatStore);
 const question = ref('');
 const isLoading = ref(false);
+const errorMessage = ref('');
 
 const route = useRoute();
 const universeId = route.params.id as string;
@@ -90,17 +93,22 @@ onMounted(async () => {
 });
 
 async function sendMessage() {
-  if (!question.value.trim() || isLoading.value) return;
-  await chatStore.addMessage('user', question.value);
-  const userQuestion = question.value;
+  const userQuestion = question.value.trim();
+  if (!userQuestion || isLoading.value) return;
+
+  errorMessage.value = '';
   question.value = '';
   isLoading.value = true;
   try {
+    await chatStore.addMessage('user', userQuestion);
     const data = await $fetch<{ answer: string }>('/api/chat', {
       method: 'POST',
       body: { question: userQuestion, universeId },
     });
     await chatStore.addMessage('oracle', data.answer);
+  } catch {
+    errorMessage.value = 'The Oracle could not be reached. Please try again.';
+    question.value = userQuestion;
   } finally {
     isLoading.value = false;
   }
@@ -355,6 +363,18 @@ async function sendMessage() {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.chat-error {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0.6rem 1.5rem;
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgb(200 90 90);
+  background: rgb(120 40 40 / 12%);
 }
 
 .input-bar {
