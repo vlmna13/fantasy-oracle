@@ -70,7 +70,23 @@
         <span class="section-title">Your Conversations</span>
         <span class="section-line"></span>
       </div>
-      <p class="empty-chats">No conversations yet. Choose a world and ask the Oracle.</p>
+      <p v-if="chats.length === 0" class="empty-chats">
+        No conversations yet. Choose a world and ask the Oracle.
+      </p>
+      <div v-else class="chats-list">
+        <NuxtLink
+          v-for="chat in chats"
+          :key="chat.universeId"
+          :to="`/oracle/${chat.universeId}`"
+          class="chat-card"
+        >
+          <img :src="chat.avatar" :alt="chat.name" class="chat-avatar" />
+          <div class="chat-info">
+            <div class="chat-name">{{ chat.name }}</div>
+            <div class="chat-last">{{ chat.lastMessage }}</div>
+          </div>
+        </NuxtLink>
+      </div>
     </section>
 
     <ProfileAccount />
@@ -79,9 +95,33 @@
 
 <script setup lang="ts">
 import { achievements } from '~/data/achievements';
+import { universes } from '~/data/universes';
 import { useAuthStore } from '~/store/auth';
+import { useChatStore } from '~/store/chat';
+import { storeToRefs } from 'pinia';
 
 const authStore = useAuthStore();
+const chatStore = useChatStore();
+const { chatSummaries } = storeToRefs(chatStore);
+
+onMounted(async () => {
+  await chatStore.loadChatSummaries();
+});
+
+const chats = computed(() =>
+  chatSummaries.value.flatMap((s) => {
+    const universe = universes.find((u) => u.id === s.universeId);
+    if (!universe) return [];
+    return [
+      {
+        universeId: s.universeId,
+        lastMessage: s.lastMessage,
+        name: universe.name,
+        avatar: universe.avatar,
+      },
+    ];
+  }),
+);
 </script>
 
 <style scoped>
@@ -342,6 +382,58 @@ const authStore = useAuthStore();
   color: rgb(var(--text-rgb) / 40%);
   text-align: center;
   padding: 2rem 0;
+}
+
+.chats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.chat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgb(18 16 22 / 72%);
+  border: 1px solid rgb(var(--gold-rgb) / 18%);
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.chat-card:hover {
+  border-color: rgb(var(--gold-rgb) / 40%);
+  background: rgb(18 16 22 / 90%);
+}
+
+.chat-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--gold-rgb) / 30%);
+  flex-shrink: 0;
+}
+
+.chat-name {
+  font-family: Cinzel, serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+
+.chat-last {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: rgb(var(--text-rgb) / 50%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
 }
 
 @media (width <= 720px) {
