@@ -8,7 +8,7 @@
     <section class="hero">
       <ProfileAvatar />
       <div class="identity">
-        <h1 class="seeker-name">Name</h1>
+        <h1 class="seeker-name">{{ authStore.displayName }}</h1>
         <p class="rank-title">Rank — <span class="rank-name">Novice Seeker</span></p>
         <div class="progress-wrap">
           <div class="progress-meta">
@@ -79,6 +79,9 @@
 
 <script setup lang="ts">
 import { achievements } from '~/data/achievements';
+import { useAuthStore } from '~/store/auth';
+
+const authStore = useAuthStore();
 </script>
 
 <style scoped>

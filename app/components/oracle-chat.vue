@@ -85,22 +85,25 @@ watch(
   { deep: true },
 );
 
-onMounted(() => {
-  chatStore.loadMessages(universeId);
+onMounted(async () => {
+  await chatStore.loadMessages(universeId);
 });
 
 async function sendMessage() {
   if (!question.value.trim() || isLoading.value) return;
-  chatStore.addMessage('user', question.value);
+  await chatStore.addMessage('user', question.value);
   const userQuestion = question.value;
   question.value = '';
   isLoading.value = true;
-  const data = await $fetch<{ answer: string }>('/api/chat', {
-    method: 'POST',
-    body: { question: userQuestion, universeId },
-  });
-  chatStore.addMessage('oracle', data.answer);
-  isLoading.value = false;
+  try {
+    const data = await $fetch<{ answer: string }>('/api/chat', {
+      method: 'POST',
+      body: { question: userQuestion, universeId },
+    });
+    await chatStore.addMessage('oracle', data.answer);
+  } finally {
+    isLoading.value = false;
+  }
 }
 </script>
 
