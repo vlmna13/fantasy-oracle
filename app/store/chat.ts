@@ -24,9 +24,8 @@ interface ChatSummary {
   lastMessage: string;
 }
 
-const dataBase = getFirestore();
-
 export const useChatStore = defineStore('chat', () => {
+  const dataBase = getFirestore();
   const authStore = useAuthStore();
   const uid = computed(() => authStore.user!.uid);
   const messages = ref<Message[]>([]);
