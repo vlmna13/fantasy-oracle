@@ -1,17 +1,6 @@
 <template>
   <header :class="`oracle-header-${universe.id}`">
-    <NuxtLink to="/" class="back">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-      >
-        <path d="M19 12H5M12 5l-7 7 7 7" />
-      </svg>
-      Worlds
-    </NuxtLink>
+    <BackButton />
 
     <div class="header-title">
       <div class="header-universe">{{ universe.name }}</div>
@@ -48,29 +37,6 @@ header::after {
   right: 5%;
   height: 1px;
   background: linear-gradient(to right, transparent, rgb(var(--gold-rgb) / 20%), transparent);
-}
-
-.back {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: Cinzel, serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  color: rgb(var(--accent-glow) / 65%);
-  cursor: pointer;
-  text-decoration: none;
-  transition: color 0.25s;
-  text-transform: uppercase;
-}
-
-.back:hover {
-  color: var(--accent-text);
-}
-
-.back svg {
-  width: 16px;
-  height: 16px;
 }
 
 .header-title {
