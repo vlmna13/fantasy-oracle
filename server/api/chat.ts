@@ -1,4 +1,17 @@
+import { getAdminAuth } from '../utils/firebase-admin';
+
 export default defineEventHandler(async (event) => {
+  const authHeader = getHeader(event, 'authorization');
+  const idToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
+  if (!idToken) {
+    throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
+  }
+  try {
+    await getAdminAuth().verifyIdToken(idToken);
+  } catch {
+    throw createError({ statusCode: 401, statusMessage: 'Invalid token' });
+  }
+
   const { question, universeId } = await readBody(event);
   const apiKey = process.env.DEEPSEEK_API_KEY;
 

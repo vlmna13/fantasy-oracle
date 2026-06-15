@@ -61,6 +61,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import { getAuth } from 'firebase/auth';
 import { universes } from '~/data/universes';
 import { useChatStore } from '~/store/chat';
 
@@ -101,8 +102,10 @@ async function sendMessage() {
   isLoading.value = true;
   try {
     await chatStore.addMessage('user', userQuestion);
+    const token = await getAuth().currentUser?.getIdToken();
     const data = await $fetch<{ answer: string }>('/api/chat', {
       method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
       body: { question: userQuestion, universeId },
     });
     await chatStore.addMessage('oracle', data.answer);
