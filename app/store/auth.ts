@@ -27,16 +27,20 @@ export const useAuthStore = defineStore('auth', () => {
     });
   }
 
+  function nicknameToEmail(nickname: string) {
+    return `${nickname.trim().toLowerCase()}@fantasy-oracle.app`;
+  }
+
   async function register(nickname: string, password: string) {
-    const email = `${nickname}@fantasy-oracle.app`;
+    const email = nicknameToEmail(nickname);
     const credential = user.value?.isAnonymous
       ? await linkWithCredential(user.value, EmailAuthProvider.credential(email, password))
       : await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(credential.user, { displayName: nickname });
+    await updateProfile(credential.user, { displayName: nickname.trim() });
   }
 
   async function login(nickname: string, password: string) {
-    const email = `${nickname}@fantasy-oracle.app`;
+    const email = nicknameToEmail(nickname);
     await signInWithEmailAndPassword(auth, email, password);
   }
   async function logout() {
