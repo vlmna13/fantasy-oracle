@@ -6,3 +6,64 @@
   --text: #d4c9a8;
   --text-rgb: 212 201 168;
 }
+
+.oracle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  padding: 0.6em 1.8em;
+  font-family: Cinzel, serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgb(var(--gold-rgb) / 55%);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 0.35s,
+    box-shadow 0.35s,
+    color 0.35s,
+    border-color 0.35s;
+}
+
+.oracle-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgb(var(--gold-rgb) / 6%) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.oracle-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.oracle-btn:hover {
+  border-color: rgb(var(--gold-rgb) / 90%);
+  background: rgb(var(--gold-rgb) / 7%);
+  box-shadow:
+    0 0 12px rgb(var(--gold-rgb) / 35%),
+    0 0 30px rgb(var(--gold-rgb) / 15%);
+}
+
+.oracle-btn-ghost {
+  border-color: rgb(var(--text-rgb) / 25%);
+  color: rgb(var(--text-rgb) / 60%);
+}
+
+.oracle-btn-ghost::before {
+  display: none;
+}
+
+.oracle-btn-ghost:hover {
+  background: rgb(var(--text-rgb) / 5%);
+  box-shadow: none;
+  border-color: rgb(var(--text-rgb) / 45%);
+  color: rgb(var(--text-rgb) / 80%);
+}
