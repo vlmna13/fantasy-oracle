@@ -8,7 +8,9 @@
     <section class="hero">
       <ProfileAvatar />
       <div class="identity">
-        <h1 class="seeker-name">{{ authStore.displayName }}</h1>
+        <h1 class="seeker-name" :style="{ visibility: authStore.isLoading ? 'hidden' : 'visible' }">
+          {{ authStore.isLoading ? 'Seeker' : authStore.displayName }}
+        </h1>
         <p class="rank-title">Rank — <span class="rank-name">Novice Seeker</span></p>
         <div class="progress-wrap">
           <div class="progress-meta">

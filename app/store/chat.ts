@@ -40,6 +40,7 @@ export const useChatStore = defineStore('chat', () => {
   }
 
   async function loadMessages(universeId: string) {
+    await getCurrentUser();
     currentUniverseId.value = universeId;
     isLoading.value = true;
     try {
@@ -56,6 +57,7 @@ export const useChatStore = defineStore('chat', () => {
   }
 
   async function loadChatSummaries() {
+    await getCurrentUser();
     const snapshot = await getDocs(collection(dataBase, 'users', uid.value, 'chats'));
     chatSummaries.value = snapshot.docs.map((d) => ({
       universeId: d.id,
