@@ -8,13 +8,15 @@ export interface QuizQuestion {
 export interface Quiz {
   universeId: string;
   title: string;
+  crest: string;
   questions: QuizQuestion[];
 }
 
 export const quizzes: Quiz[] = [
   {
     universeId: 'harry-potter',
-    title: 'The Trial of Hogwarts',
+    title: 'Trial of the Hogwarts Scholar',
+    crest: '/crests/quiz-hp.svg',
     questions: [
       {
         id: 'hp-1',
@@ -50,7 +52,8 @@ export const quizzes: Quiz[] = [
   },
   {
     universeId: 'lord-of-the-rings',
-    title: 'The Trial of Middle-earth',
+    title: 'Trial of the Ring-bearer',
+    crest: '/crests/quiz-lotr.svg',
     questions: [
       {
         id: 'lotr-1',
@@ -86,7 +89,8 @@ export const quizzes: Quiz[] = [
   },
   {
     universeId: 'witcher',
-    title: 'The Trial of the Continent',
+    title: 'Trial of the Wolf',
+    crest: '/crests/quiz-witcher.svg',
     questions: [
       {
         id: 'witcher-1',

@@ -4,17 +4,17 @@
 
     <div class="header-title">
       <div class="header-universe">{{ universe.name }}</div>
-      <div class="header-sub">The Oracle awaits your question</div>
+      <div class="header-sub">{{ subtitle ?? 'The Oracle awaits your question' }}</div>
     </div>
-    <div class="header-crest">
+    <NuxtLink to="/profile" class="header-crest" aria-label="Your sanctum">
       <img :src="universe.crest" :alt="universe.name" />
-    </div>
+    </NuxtLink>
   </header>
 </template>
 
 <script setup lang="ts">
 import type { Universe } from '~/data/universes';
-defineProps<{ universe: Universe }>();
+defineProps<{ universe: Universe; subtitle?: string }>();
 </script>
 <style scoped>
 header {
@@ -64,5 +64,11 @@ header::after {
 .header-crest {
   display: flex;
   justify-content: flex-end;
+  cursor: pointer;
+  transition: opacity 0.25s;
+}
+
+.header-crest:hover {
+  opacity: 0.7;
 }
 </style>

@@ -3,6 +3,7 @@
   --accent: 139 26 26;
   --accent-text: #c9a84c;
   --accent-glow: 201 168 76;
+  --accent-bright: 205 75 75;
   --bg-start: #13070a;
   --bg-mid: #200d0d;
   --bg-end: #0c0506;
@@ -17,6 +18,7 @@
   --accent: 42 92 63;
   --accent-text: #8aab8a;
   --accent-glow: 90 155 100;
+  --accent-bright: 105 175 115;
   --bg-start: #060e09;
   --bg-mid: #0d1a10;
   --bg-end: #050a07;
@@ -31,6 +33,7 @@
   --accent: 64 69 96;
   --accent-text: #c0c8d8;
   --accent-glow: 192 200 220;
+  --accent-bright: 150 160 205;
   --bg-start: #0b0c10;
   --bg-mid: #131520;
   --bg-end: #080910;
