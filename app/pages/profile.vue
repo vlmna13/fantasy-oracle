@@ -52,7 +52,14 @@
         <span class="section-count">0 / 6 unlocked</span>
       </div>
       <div class="ach-grid">
-        <div v-for="ach in achievements" :key="ach.name" class="ach locked">
+        <component
+          :is="ach.quizUniverseId ? NuxtLink : 'div'"
+          v-for="ach in achievements"
+          :key="ach.name"
+          :to="ach.quizUniverseId ? `/oracle/${ach.quizUniverseId}/quiz` : undefined"
+          class="ach locked"
+          :class="{ playable: ach.quizUniverseId }"
+        >
           <div class="ach-medal">
             <svg viewBox="0 0 24 24" fill="none" stroke="#9a9aa2" stroke-width="1.6">
               <rect x="5" y="11" width="14" height="10" rx="1" />
@@ -63,7 +70,7 @@
             <div class="ach-name">{{ ach.name }}</div>
             <div class="ach-desc">{{ ach.desc }}</div>
           </div>
-        </div>
+        </component>
       </div>
     </section>
 
@@ -105,6 +112,7 @@ import { storeToRefs } from 'pinia';
 const authStore = useAuthStore();
 const chatStore = useChatStore();
 const { chatSummaries } = storeToRefs(chatStore);
+const NuxtLink = resolveComponent('NuxtLink');
 
 onMounted(async () => {
   await chatStore.loadChatSummaries();
@@ -367,6 +375,20 @@ const chats = computed(() =>
   color: #9a9aa2;
   letter-spacing: 0.04em;
   margin-bottom: 0.25rem;
+}
+
+.ach.playable {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.3s,
+    opacity 0.3s;
+}
+
+.ach.playable:hover {
+  opacity: 0.75;
+  border-color: rgb(var(--gold-rgb) / 45%);
 }
 
 .ach-desc {
