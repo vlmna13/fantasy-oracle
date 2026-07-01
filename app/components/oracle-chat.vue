@@ -64,12 +64,14 @@ import { storeToRefs } from 'pinia';
 import { getAuth } from 'firebase/auth';
 import { universes } from '~/data/universes';
 import { useChatStore } from '~/store/chat';
+import { useProgressStore } from '~/store/progress';
 
 const chatStore = useChatStore();
 const { messages } = storeToRefs(chatStore);
 const question = ref('');
 const isLoading = ref(false);
 const errorMessage = ref('');
+const progress = useProgressStore();
 
 const route = useRoute();
 const universeId = route.params.id as string;
@@ -109,6 +111,7 @@ async function sendMessage() {
       body: { question: userQuestion, universeId },
     });
     await chatStore.addMessage('oracle', data.answer);
+    progress.addQuestionXp();
   } catch {
     errorMessage.value = 'The Oracle could not be reached. Please try again.';
     question.value = userQuestion;

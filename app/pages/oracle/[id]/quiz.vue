@@ -2,7 +2,7 @@
   <div class="page" :class="`universe-${universId}`">
     <OracleHeader v-if="universe" :universe="universe" subtitle="Prove your knowledge" />
     <Intro
-      v-if="state === 'intro'"
+      v-if="ready && state === 'intro'"
       :universe-name="universe?.name"
       :title="quiz?.title"
       :crest="quiz?.crest"
@@ -10,18 +10,14 @@
       @begin="startTrial"
     ></Intro>
     <Playing
-      v-else-if="state === 'playing'"
+      v-else-if="ready && state === 'playing'"
       :current-index="currentIndex"
       :total="quiz?.questions.length"
       :current-question="currentQuestion"
       @next="handleNext"
       @fail="handleFail"
+      @win="handleWin"
     ></Playing>
-    <section v-else class="quiz-result">
-      <h2>5 / 5</h2>
-      <p>Trial passed! +150 XP</p>
-      <button @click="state = 'intro'">Return</button>
-    </section>
   </div>
 </template>
 
@@ -30,14 +26,28 @@ import Intro from '~/components/quiz/intro.vue';
 import Playing from '~/components/quiz/playing.vue';
 import { quizzes } from '~/data/quizzes';
 import { universes } from '~/data/universes';
+import { useProgressStore } from '~/store/progress';
 
 const route = useRoute();
 const universId = route.params.id as string;
 const quiz = quizzes.find((q) => q.universeId === universId);
 const universe = universes.find((u) => u.id === universId);
-const state = ref<'intro' | 'playing' | 'result'>('intro');
+const progress = useProgressStore();
+const state = ref<'intro' | 'playing'>('intro');
 const currentIndex = ref(0);
 const currentQuestion = computed(() => quiz?.questions[currentIndex.value]);
+const ready = ref(false);
+
+onMounted(async () => {
+  if (!quiz || !universe) {
+    return navigateTo('/');
+  }
+  await progress.load();
+  if (progress.completedQuizzes.includes(universId)) {
+    return navigateTo('/profile');
+  }
+  ready.value = true;
+});
 
 function startTrial() {
   currentIndex.value = 0;
@@ -45,14 +55,15 @@ function startTrial() {
 }
 
 function handleNext() {
-  if (currentIndex.value + 1 >= (quiz?.questions.length ?? 0)) {
-    state.value = 'result';
-  } else {
-    currentIndex.value++;
-  }
+  currentIndex.value++;
 }
 
 function handleFail() {
+  setTimeout(() => navigateTo('/profile'), 1600);
+}
+
+function handleWin() {
+  progress.completeQuiz(universId);
   setTimeout(() => navigateTo('/profile'), 1600);
 }
 </script>

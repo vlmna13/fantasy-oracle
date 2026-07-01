@@ -11,14 +11,16 @@
         <h1 class="seeker-name" :style="{ visibility: authStore.isLoading ? 'hidden' : 'visible' }">
           {{ authStore.isLoading ? 'Seeker' : authStore.displayName }}
         </h1>
-        <p class="rank-title">Rank — <span class="rank-name">Novice Seeker</span></p>
+        <p class="rank-title">
+          Rank — <span class="rank-name">{{ progress.rank }}</span>
+        </p>
         <div class="progress-wrap">
           <div class="progress-meta">
-            <span>Level 1 · Novice Seeker</span>
-            <span class="xp">0 / 100 XP</span>
+            <span>Level {{ progress.level }} · {{ progress.rank }}</span>
+            <span class="xp">{{ progress.levelProgress }} / 100 XP</span>
           </div>
           <div class="progress-track">
-            <div class="progress-fill"></div>
+            <div class="progress-fill" :style="{ width: progress.levelProgress + '%' }"></div>
           </div>
         </div>
       </div>
@@ -31,13 +33,16 @@
       </div>
       <div class="stats">
         <div class="stat">
-          <span class="stat-num">0</span><span class="stat-label">Questions Asked</span>
+          <span class="stat-num">{{ progress.questionsAsked }}</span
+          ><span class="stat-label">Questions Asked</span>
         </div>
         <div class="stat">
-          <span class="stat-num">0</span><span class="stat-label">Quizzes Won</span>
+          <span class="stat-num">{{ progress.completedQuizzes.length }}</span
+          ><span class="stat-label">Quizzes Won</span>
         </div>
         <div class="stat">
-          <span class="stat-num">0</span><span class="stat-label">Worlds Explored</span>
+          <span class="stat-num">{{ chats.length }}</span
+          ><span class="stat-label">Worlds Explored</span>
         </div>
         <div class="stat">
           <span class="stat-num">0</span><span class="stat-label">Day Streak</span>
@@ -49,19 +54,38 @@
       <div class="section-head">
         <span class="section-title">Trials &amp; Achievements</span>
         <span class="section-line"></span>
-        <span class="section-count">0 / 6 unlocked</span>
+        <span class="section-count"
+          >{{ unlockedCount }} / {{ achievementList.length }} unlocked</span
+        >
       </div>
       <div class="ach-grid">
         <component
-          :is="ach.quizUniverseId ? NuxtLink : 'div'"
-          v-for="ach in achievements"
+          :is="ach.quizUniverseId && !ach.unlocked ? NuxtLink : 'div'"
+          v-for="ach in achievementList"
           :key="ach.name"
-          :to="ach.quizUniverseId ? `/oracle/${ach.quizUniverseId}/quiz` : undefined"
-          class="ach locked"
-          :class="{ playable: ach.quizUniverseId }"
+          :to="
+            ach.quizUniverseId && !ach.unlocked ? `/oracle/${ach.quizUniverseId}/quiz` : undefined
+          "
+          class="ach"
+          :class="{
+            locked: !ach.unlocked,
+            unlocked: ach.unlocked,
+            playable: ach.quizUniverseId && !ach.unlocked,
+          }"
         >
           <div class="ach-medal">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#9a9aa2" stroke-width="1.6">
+            <svg
+              v-if="ach.unlocked"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--gold)"
+              stroke-width="1.8"
+            >
+              <circle cx="12" cy="9" r="6" />
+              <path d="M9 9l2 2 4-4" />
+              <path d="M9 14l-2 6 5-3 5 3-2-6" />
+            </svg>
+            <svg v-else viewBox="0 0 24 24" fill="none" stroke="#9a9aa2" stroke-width="1.6">
               <rect x="5" y="11" width="14" height="10" rx="1" />
               <path d="M8 11V7a4 4 0 0 1 8 0v4" />
             </svg>
@@ -108,15 +132,27 @@ import { universes } from '~/data/universes';
 import { useAuthStore } from '~/store/auth';
 import { useChatStore } from '~/store/chat';
 import { storeToRefs } from 'pinia';
+import { useProgressStore } from '~/store/progress';
 
 const authStore = useAuthStore();
 const chatStore = useChatStore();
 const { chatSummaries } = storeToRefs(chatStore);
 const NuxtLink = resolveComponent('NuxtLink');
+const progress = useProgressStore();
 
 onMounted(async () => {
   await chatStore.loadChatSummaries();
+  await progress.load();
 });
+
+const achievementList = computed(() =>
+  achievements.map((ach) => ({
+    ...ach,
+    unlocked: ach.quizUniverseId ? progress.completedQuizzes.includes(ach.quizUniverseId) : false,
+  })),
+);
+
+const unlockedCount = computed(() => achievementList.value.filter((a) => a.unlocked).length);
 
 const chats = computed(() =>
   chatSummaries.value.flatMap((s) => {
@@ -351,6 +387,13 @@ const chats = computed(() =>
   filter: grayscale(0.7);
 }
 
+.ach.unlocked {
+  border-color: rgb(var(--gold-rgb) / 55%);
+  box-shadow:
+    0 0 18px rgb(var(--gold-rgb) / 20%),
+    inset 0 0 24px rgb(var(--gold-rgb) / 6%);
+}
+
 .ach-medal {
   width: 48px;
   height: 48px;
@@ -375,6 +418,16 @@ const chats = computed(() =>
   color: #9a9aa2;
   letter-spacing: 0.04em;
   margin-bottom: 0.25rem;
+}
+
+.ach.unlocked .ach-medal {
+  border-color: rgb(var(--gold-rgb) / 60%);
+  background: radial-gradient(circle at 40% 38%, #2a2416, #14110a);
+  box-shadow: 0 0 14px rgb(var(--gold-rgb) / 25%);
+}
+
+.ach.unlocked .ach-name {
+  color: var(--gold);
 }
 
 .ach.playable {

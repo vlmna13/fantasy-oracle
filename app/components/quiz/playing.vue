@@ -32,9 +32,16 @@
       </button>
     </div>
     <div class="result">
-      <button v-if="selected && isCorrect" class="oracle-btn" @click="next">
+      <button
+        v-if="selected && isCorrect && !won"
+        class="oracle-btn"
+        @click="isLast ? finish() : next()"
+      >
         {{ isLast ? 'Claim the Seal' : 'Next Question' }}
       </button>
+      <p v-else-if="won" class="vision-win">
+        ✦ The seal is yours — the Oracle bows to your knowledge.
+      </p>
       <p v-else-if="selected && !isCorrect" class="vision-fail">
         ✧ The vision darkens — that path was false.
       </p>
@@ -51,9 +58,10 @@ const properties = defineProps<{
   currentQuestion?: QuizQuestion;
 }>();
 
-const emit = defineEmits<{ next: []; fail: [] }>();
+const emit = defineEmits<{ next: []; fail: []; win: [] }>();
 
 const selected = ref<string | undefined>(undefined);
+const won = ref(false);
 
 const isCorrect = computed(() => selected.value === properties.currentQuestion?.correct);
 const isLast = computed(() => properties.currentIndex + 1 === properties.total);
@@ -69,6 +77,11 @@ function choose(option: string) {
 function next() {
   selected.value = undefined;
   emit('next');
+}
+
+function finish() {
+  won.value = true;
+  emit('win');
 }
 </script>
 
