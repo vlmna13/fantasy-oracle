@@ -148,7 +148,11 @@ onMounted(async () => {
 const achievementList = computed(() =>
   achievements.map((ach) => ({
     ...ach,
-    unlocked: ach.quizUniverseId ? progress.completedQuizzes.includes(ach.quizUniverseId) : false,
+    unlocked: ach.unlock({
+      questionsAsked: progress.questionsAsked,
+      level: progress.level,
+      completedQuizzes: progress.completedQuizzes,
+    }),
   })),
 );
 
@@ -324,8 +328,11 @@ const chats = computed(() =>
   background: rgb(18 16 22 / 72%);
   border: 1px solid rgb(var(--gold-rgb) / 18%);
   padding: 1.1rem 1rem;
-  text-align: center;
   position: relative;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
 }
 
 .stat::before,
