@@ -45,7 +45,8 @@
           ><span class="stat-label">Worlds Explored</span>
         </div>
         <div class="stat">
-          <span class="stat-num">0</span><span class="stat-label">Day Streak</span>
+          <span class="stat-num">{{ progress.streak }}</span
+          ><span class="stat-label">Day Streak</span>
         </div>
       </div>
     </section>
