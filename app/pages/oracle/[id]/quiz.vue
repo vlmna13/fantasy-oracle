@@ -18,12 +18,14 @@
       @fail="handleFail"
       @win="handleWin"
     ></Playing>
+    <Result v-if="outcome !== 'none'" :won="outcome === 'win'" :universe-id="universId" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Intro from '~/components/quiz/intro.vue';
 import Playing from '~/components/quiz/playing.vue';
+import Result from '~/components/quiz/result.vue';
 import { quizzes } from '~/data/quizzes';
 import { universes } from '~/data/universes';
 import { useProgressStore } from '~/store/progress';
@@ -37,6 +39,7 @@ const state = ref<'intro' | 'playing'>('intro');
 const currentIndex = ref(0);
 const currentQuestion = computed(() => quiz?.questions[currentIndex.value]);
 const ready = ref(false);
+const outcome = ref<'none' | 'win' | 'fail'>('none');
 
 onMounted(async () => {
   if (!quiz || !universe) {
@@ -59,12 +62,12 @@ function handleNext() {
 }
 
 function handleFail() {
-  setTimeout(() => navigateTo('/profile'), 1600);
+  outcome.value = 'fail';
 }
 
 function handleWin() {
   progress.completeQuiz(universId);
-  setTimeout(() => navigateTo('/profile'), 1600);
+  outcome.value = 'win';
 }
 </script>
 
