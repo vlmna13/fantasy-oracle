@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/eslint', 'nuxt-vuefire'],
+  modules: ['@pinia/nuxt', '@nuxt/eslint', 'nuxt-vuefire'],
   css: ['~/assets/styles/variables.css', '~/assets/styles/universes.css'],
   app: {
     head: {
